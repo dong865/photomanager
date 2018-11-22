@@ -12,8 +12,15 @@
         "overtrue/laravel-lang": "~3.0",
         "spatie/laravel-menu": "^3.2",
         "spatie/laravel-permission": "^2.25",
+        "summerblue/administrator": "dev-master",
         "viacreative/sudo-su": "~1.1"
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/administrator"
+        }
+    ],
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
         "filp/whoops": "^2.0",

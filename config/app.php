@@ -120,7 +120,7 @@ return [
     */
 
     'providers' => [
-
+        Frozennode\Administrator\AdministratorServiceProvider::class,
         /*
          * Laravel Framework Service Providers...
          */
