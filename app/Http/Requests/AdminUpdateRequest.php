@@ -24,7 +24,8 @@ class AdminUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $id=$this->route('admin');//获取当前需要排除的id,这里的 admin 是 admins表
+        $id=$this->route('admin');//获取当前需要排除的id,这里的 admin 是 路由的后缀admin/{admin} 大括号里面的admin 。
+        // dd{$id};
         return [
             'name'=>'bail|required|between:2,30|regex:/^[A-Za-z0-9\-\_]+$/|unique:users|unique:admins,nickname|unique:admins,name,'.$id,
             'nickname'=>'bail|string|nullable|between:2,30|unique:users|unique:admins,name|unique:admins,nickname,'.$id,
@@ -32,7 +33,7 @@ class AdminUpdateRequest extends FormRequest
             'intro' => 'bail|nullable|string|max:80',
             'avatar'=>'bail|image|dimensions:min_width=200,min_height=200',
             'password'=>'bail|nullable|string|between:6,30|confirmed|string',
-            'password_original'=>'bail|sometimes|check_password', 
+            'password_original'=>'bail|sometimes|check_password',
         ];
     }
     // 对字段的解释
@@ -48,4 +49,6 @@ class AdminUpdateRequest extends FormRequest
             'password_original'=>'原密码'
         ];
     }
+
+
 }

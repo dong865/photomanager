@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PhotoAddRequest;
 use App\Http\Repositorys\PhotoDepot;
 use App\Models\Photo;
+use App\Models\Picture;
 
 class PhotoController extends Controller
 {
@@ -54,7 +55,10 @@ class PhotoController extends Controller
      */
     public function show($id)
     {
-        //
+        //获取id为$id的相册下所有的图片
+        $picture=Photo::find($id)->picture;
+
+        return view('photos.show',compact('picture','id'));
     }
 
     /**

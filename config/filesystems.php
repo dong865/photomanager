@@ -12,7 +12,7 @@ return [
     | based disks are available to your application. Just store away!
     |
     */
-
+    // 默认使用本地端空间 支持 "local", "ftp", "s3", "rackspace"
     'default' => env('FILESYSTEM_DRIVER', 'local'),
 
     /*

@@ -33,4 +33,9 @@ class Admin extends Authenticatable
     {
         return $this->hasMany('App\Models\Photo');
     }
+
+    public function picture()
+    {
+        return $this->hasMany('App\Models\Picture');
+    }
 }

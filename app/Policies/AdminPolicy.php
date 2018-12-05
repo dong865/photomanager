@@ -11,7 +11,7 @@ class AdminPolicy
 
     public function before($user, $ability)
     {
-        // 如果用户拥有管理内容的权限的话，即授权通过
+        // 如果用户拥有管理用户的权限的话，即授权通过
         if ($user->can('manage_users')) {
             return true;
         }
@@ -46,6 +46,7 @@ class AdminPolicy
      * @param  \App\Admin  $admin
      * @return mixed
      */
+    // updata()传入当前用户$currentUser和被编辑用户$user
     public function update(Admin $currentUser, Admin $user)
     {
         //

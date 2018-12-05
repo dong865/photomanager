@@ -19,7 +19,7 @@
     <!-- Main styles for this application-->
     <link href="{{asset('photostyle/css/style.css')}}" rel="stylesheet">
     <link href="{{asset('photostyle/vendors/pace-progress/css/pace.min.css')}}" rel="stylesheet">
-    
+
   </head>
   <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
     @include('layouts._header')
@@ -67,11 +67,11 @@
               <ul class="nav-dropdown-items">
                 <li class="nav-item">
                   <a class="nav-link ml-2 small" href="{{route('admin.index')}}">
-                    <i class="nav-icon icon-user mr-3"></i> 用户</a>
+                    <i class="nav-icon icon-user mr-3"></i>用户管理</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link ml-2 small" href="buttons/button-group.html">
-                    <i class="nav-icon icon-cursor mr-3"></i> Buttons Group</a>
+                  <a class="nav-link ml-2 small" href="{{route('role.index')}}">
+                    <i class="nav-icon fa fa-address-card-o mr-3" aria-hidden="true"></i>角色管理</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link ml-2 small" href="buttons/dropdowns.html">
@@ -83,92 +83,7 @@
                 </li>
               </ul>
             </li>
-            {{--  <li class="nav-item">
-              <a class="nav-link" href="charts.html">
-                <i class="nav-icon icon-pie-chart"></i> Charts</a>
-            </li>
-            <li class="nav-item nav-dropdown">
-              <a class="nav-link nav-dropdown-toggle" href="#">
-                <i class="nav-icon icon-star"></i> Icons</a>
-              <ul class="nav-dropdown-items">
-                <li class="nav-item">
-                  <a class="nav-link" href="icons/coreui-icons.html">
-                    <i class="nav-icon icon-star"></i> CoreUI Icons
-                    <span class="badge badge-success">NEW</span>
-                  </a>
-                  <a class="nav-link" href="icons/flags.html">
-                    <i class="nav-icon icon-star"></i> Flags</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="icons/font-awesome.html">
-                    <i class="nav-icon icon-star"></i> Font Awesome
-                    <span class="badge badge-secondary">4.7</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="icons/simple-line-icons.html">
-                    <i class="nav-icon icon-star"></i> Simple Line Icons</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item nav-dropdown">
-              <a class="nav-link nav-dropdown-toggle" href="#">
-                <i class="nav-icon icon-bell"></i> Notifications</a>
-              <ul class="nav-dropdown-items">
-                <li class="nav-item">
-                  <a class="nav-link" href="notifications/alerts.html">
-                    <i class="nav-icon icon-bell"></i> Alerts</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="notifications/badge.html">
-                    <i class="nav-icon icon-bell"></i> Badge</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="notifications/modals.html">
-                    <i class="nav-icon icon-bell"></i> Modals</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="widgets.html">
-                <i class="nav-icon icon-calculator"></i> Widgets
-                <span class="badge badge-primary">NEW</span>
-              </a>
-            </li>
-            <li class="divider"></li>
-            <li class="nav-title">Extras</li>
-            <li class="nav-item nav-dropdown">
-              <a class="nav-link nav-dropdown-toggle" href="#">
-                <i class="nav-icon icon-star"></i> Pages</a>
-              <ul class="nav-dropdown-items">
-                <li class="nav-item">
-                  <a class="nav-link" href="login.html" target="_top">
-                    <i class="nav-icon icon-star"></i> Login</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="register.html" target="_top">
-                    <i class="nav-icon icon-star"></i> Register</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="404.html" target="_top">
-                    <i class="nav-icon icon-star"></i> Error 404</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="500.html" target="_top">
-                    <i class="nav-icon icon-star"></i> Error 500</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item mt-auto">
-              <a class="nav-link nav-link-success" href="https://coreui.io" target="_top">
-                <i class="nav-icon icon-cloud-download"></i> Download CoreUI</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link nav-link-danger" href="https://coreui.io/pro/" target="_top">
-                <i class="nav-icon icon-layers"></i> Try CoreUI
-                <strong>PRO</strong>
-              </a>
-            </li>  --}}
+
           </ul>
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>
@@ -196,7 +111,7 @@
         </ol>
           <div class="container-fluid mb-4">
           <div class="animated fadeIn"></div>
-        </div> 
+        </div>
         @include('common.message')
         <div class="mt-3 position-relative">
             @yield('content')
@@ -511,4 +426,5 @@
     <script src="{{asset('photostyle/vendors/perfect-scrollbar/js/perfect-scrollbar.min.js')}}"></script>
     <script src="{{asset('photostyle/vendors/@coreui/coreui/js/coreui.min.js')}}"></script>
   </body>
+  @yield('customJs')
 </html>

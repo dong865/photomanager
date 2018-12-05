@@ -21,3 +21,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('photo', 'PhotoController');
 Route::resource('admin','AdminController');
+Route::resource('role','RoleController');
+Route::resource('photo/picture','PictureController');
+
+
+Route::get('/test', function(){
+    return view('photos.test');
+});

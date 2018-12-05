@@ -120,7 +120,8 @@ return [
     */
 
     'providers' => [
-        Frozennode\Administrator\AdministratorServiceProvider::class,
+        //integration-imag
+        Intervention\Image\ImageServiceProvider::class,
         /*
          * Laravel Framework Service Providers...
          */
@@ -216,6 +217,8 @@ return [
         // 菜单类
         'Menu' => Spatie\Menu\Laravel\MenuFacade::class,
 
+        // integration-image
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

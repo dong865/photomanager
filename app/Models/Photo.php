@@ -14,4 +14,9 @@ class Photo extends Model
     {
         return $this->belongsTo('App\Models\Admin');
     }
+
+    public function picture()
+    {
+        return $this->hasMany('App\Models\Picture');
+    }
 }
