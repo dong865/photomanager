@@ -1,13 +1,14 @@
 @extends('layouts.app')
 @section('title','图片管理')
-@section('content')    
+@section('content')
+    {{--  创建项目模态框  --}}
     @component('common._modal',[
         'modal_id'=>'photoModal',
         'title'=>'新建文件夹',
         ])
         <form action="{{route('photo.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="modal-body">                  
+            <div class="modal-body">
                 <div class="form-group">
                     <input class="form-control" type="text" name="name" placeholder="请填写文件夹标题">
                 </div>
@@ -16,7 +17,7 @@
                 </div>
                 <div class="form-group">
                     <input type="file" name="cover">
-                </div>                   
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -24,10 +25,25 @@
             </div>
         </form>
     @endcomponent
+
     {{-- 项目视图 --}}
     <div class="card-group row m-2">
-        @foreach ($photos as $item) 
-        <div class="col-12 col-md-2 col-sm-3"> 
+        @foreach ($photos as $item)
+        {{--  点击删除弹出模态框  --}}
+        @component('common._modal',[
+            'modal_id'=>'deleteModal',
+            'title'=>'确认删除？'
+        ])
+            <div class="d-flex justify-content-center p-2">
+                <form class="d-inline" action="{{route('photo.destroy',$item->id)}}" method="post">
+                    <button type="submit" class="btn btn-danger m-2" >删除</button>
+                    @csrf
+                    @method('DELETE')
+                </form>
+                <button class="btn btn-primary m-2" type="button" data-dismiss="modal">取消</button>
+            </div>
+        @endcomponent
+        <div class="col-12 col-md-2 col-sm-3">
                 <style type="text/css">
                     .photo-card a{
                         text-decoration:none;
@@ -45,33 +61,31 @@
                         height: 32px;
                     }
                 </style>
-            <div class="card photo-card">    
-                <div class="photo-bar">   
+            <div class="card photo-card">
+                <div class="photo-bar">
                     <a href="{{route('photo.edit',$item->id)}}"><i class="fa fa-cog fa-lg p-2" aria-hidden="true"></i></a>
-                    <form class="d-inline" action="{{route('photo.destroy',$item->id)}}" method="post">                                    
-                        <button type="submit" style="border:none"><i class="fa fa-times-circle fa-lg p-2" aria-hidden="true"></i></button>       
-                        @csrf
-                        @method('DELETE')
-                    </form>
-                </div>                     
+                    {{--  <button type="submit" style="border:none"><i class="fa fa-times-circle fa-lg p-2" aria-hidden="true"></i></button>  --}}
+                    <button data-toggle="modal" data-target="#deleteModal"  style="border:none"><i class="fa fa-times-circle fa-lg p-2" aria-hidden="true"></i></button>
+
+                </div>
                 <a href="{{route('photo.show',$item->id)}}"><img class="card-img-top" src="{{asset('storage/uploads/images/photo/cover/'.$item->cover)}}" alt="865832@qq.com"></a>
                 <a href="{{route('photo.show',$item->id)}}">
                 <div class="card-body">
                     <h5 class="card-title" style="overflow:hidden;white-space: nowrap;text-overflow:ellipsis;">{{$item->name}}</h5>
                     <div style="height:46px;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;">
                         <p class="card-text">{{$item->describe}}</p>
-                    </div>                           
+                    </div>
                     <p class="card-text"><small class="text-muted">创建于：{{$item->created_at->diffForHumans()}}</small></p>
                 </div>
                 </a>
             </div>
-        </div>   
+        </div>
 
         @endforeach
         <div class="col-12 col-md-2">
             <div class="card bg-light">
-                <a href="javascript:void" role="button" data-toggle="modal" data-target="#photoModal"><i class="fa fa-plus fa-lg p-5 bg-light" aria-hidden="true"></i></a>                   
+                <a href="javascript:void" role="button" data-toggle="modal" data-target="#photoModal"><i class="fa fa-plus fa-lg p-5 bg-light" aria-hidden="true"></i></a>
             </div>
-        </div>               
-    </div>  
+        </div>
+    </div>
 @endsection

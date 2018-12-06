@@ -3,12 +3,15 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{$title}}</h5>
+                @isset($title)
+                    <h5 class="modal-title" id="exampleModalLabel">{{$title}}</h5>
+                @endisset
+
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            {{$slot}}          
+            {{$slot}}
         </div>
     </div>
     </div>
