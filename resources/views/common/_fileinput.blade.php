@@ -7,6 +7,7 @@
 
 
     @section('customJs')
+        {{--  图片插件  --}}
         <script src="{{asset('images/js/plugins/sortable.js')}}" type="text/javascript"></script>
         <script src="{{asset('images/js/fileinput.js')}}" type="text/javascript"></script>
         <script src="{{asset('images/js/locales/fr.js')}}" type="text/javascript"></script>
@@ -18,16 +19,55 @@
         {{--  瀑布流  --}}
         <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
         <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
-        {{--  瀑布流  --}}
-        <script>
-        $('.masonry').imagesLoaded(function() {
-            $('.masonry').masonry({
-            itemSelector: '.item'
-            });
-        });
-        </script>
+
+        //无限滚动
+        <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
 
         <script>
+            {{--  瀑布流  --}}
+            //初始化masonry
+            $('.masonry').imagesLoaded(function() {
+                $('.masonry').masonry({
+                    itemSelector: '.item',
+                    isAnimated: true,
+                    isFitWidth:true
+                });
+            });
+            //点击图片
+            function showImg(img){
+                $('.roof').fadeIn('slow');
+                $('.roof img').attr('src',img)
+                $('.roof img').css('display','block')
+                //禁止鼠标滑动
+                $(document).bind("mousewheel",function(event, delta){
+                    return false;
+                })
+            }
+            //阻止冒泡
+            $('.roof img').click(function(e){
+                e.stopPropagation();
+            })
+            //点击遮罩层关闭
+            $('.roof').click(function(e){
+                $(this).fadeOut('slow');
+                //移除绑定的禁止鼠标移动事件。
+                $(document).unbind("mousewheel");
+            })
+
+            $(document).scroll(function(){
+                var win=$(window).height();//可视区域高度
+                var doc=$(this).height();//document高度
+                var scroll_top=$(this).scrollTop();//网页被卷起来的高度
+                console.log(win);
+                if(doc-win==scroll_top){
+                    {{--  alert(6);  --}}
+                }
+
+            })
+
+
+         {{--  fileinput图片上传插件  --}}
+
             $(document).ready(function(){
                 var gid;
                 //fileinput插件属性

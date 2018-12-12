@@ -56,8 +56,7 @@ class PhotoController extends Controller
     public function show($id)
     {
         //获取id为$id的相册下所有的图片
-        $picture=Photo::find($id)->picture;
-
+        $picture=Photo::find($id)->picture()->paginate(25);
         return view('photos.show',compact('picture','id'));
     }
 

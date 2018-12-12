@@ -1,69 +1,58 @@
+<!DOCTYPE html>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+<html lang="cn">
+  <head>
+    <base href="./">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
+    <meta name="author" content="Łukasz Holeczek">
+    <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
+    <title>登录 | {{env('APP_NAME', 'Laravel')}}</title>
+    <!-- Icons-->
+    <link href="{{asset('photostyle/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link href="{{asset('photostyle/vendors/simple-line-icons/css/simple-line-icons.css')}}" rel="stylesheet">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="name" class="col-sm-4 col-form-label text-md-right">{{ __('用户名') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
-
-                                @if ($errors->has('name'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
-                            </div>
-                        </div>
-                    </form>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_957641_4flft88vhdk.css">
+    <link href="{{asset('logins/css/style.css')}}" rel='stylesheet' type='text/css' />
+  </head>
+  <body class="app header-fixed sidebar-fixed aside-menu-fixed sidebar-lg-show">
+        <!--SIGN UP-->
+        <div class="login-form">
+            <div class="close"> </div>
+                <div class="head-info">
+                    <label class="lbl-1"> </label>
+                    <label class="lbl-2"> </label>
+                    <label class="lbl-3"> </label>
                 </div>
+                    <div class="clear"> </div>
+            <div class="avtar">
+                <img src="{{asset('logins/images/avtar.png')}}" />
             </div>
+            {{--  错误信息  --}}
+            @if ($errors->has('name'))
+                <div class="message"><strong>{{ $errors->first('name') }}</strong></div>
+            @endif
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+                <div class="form-input text">
+                    <span><i class="iconfont icon-user3"></i></span>
+                    <input type="text" class="text" name="name" value="{{ old('name') }}"  placeholder="Username" onfocus="this.placeholder=''" onblur="this.placeholder='Username'" required >
+                </div>
+                <div class="form-input key">
+                    <span><i class="iconfont icon-mimashezhi"></i></span>
+                    <input type="password" name="password"  onfocus="this.placeholder = '';" onblur="this.placeholder='*******';" placeholder="*******" required>
+                </div>
+                <div class="signin">
+                    <input type="submit" value="登录" >
+                </div>
+            </form>
+
         </div>
-    </div>
-</div>
+    <script src="{{asset('photostyle/vendors/jquery/js/jquery.min.js')}}"></script>
+  </body>
+</html>
+
+
 

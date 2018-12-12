@@ -64,26 +64,24 @@
             <div class="card photo-card">
                 <div class="photo-bar">
                     <a href="{{route('photo.edit',$item->id)}}"><i class="fa fa-cog fa-lg p-2" aria-hidden="true"></i></a>
-                    {{--  <button type="submit" style="border:none"><i class="fa fa-times-circle fa-lg p-2" aria-hidden="true"></i></button>  --}}
                     <button data-toggle="modal" data-target="#deleteModal"  style="border:none"><i class="fa fa-times-circle fa-lg p-2" aria-hidden="true"></i></button>
-
                 </div>
                 <a href="{{route('photo.show',$item->id)}}"><img class="card-img-top" src="{{asset('storage/uploads/images/photo/cover/'.$item->cover)}}" alt="865832@qq.com"></a>
                 <a href="{{route('photo.show',$item->id)}}">
-                <div class="card-body">
-                    <h5 class="card-title" style="overflow:hidden;white-space: nowrap;text-overflow:ellipsis;">{{$item->name}}</h5>
-                    <div style="height:46px;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;">
-                        <p class="card-text">{{$item->describe}}</p>
+                    <div class="card-body">
+                        <h5 class="card-title" style="overflow:hidden;white-space: nowrap;text-overflow:ellipsis;">{{$item->name}}</h5>
+                        <div style="height:46px;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;">
+                            <p class="card-text">{{$item->describe}}</p>
+                        </div>
+                        <p class="card-text"><small class="text-muted">创建于：{{$item->created_at->diffForHumans()}}</small></p>
                     </div>
-                    <p class="card-text"><small class="text-muted">创建于：{{$item->created_at->diffForHumans()}}</small></p>
-                </div>
                 </a>
             </div>
         </div>
 
         @endforeach
-        <div class="col-12 col-md-2">
-            <div class="card bg-light">
+        <div class="col-12 col-md-2 col-sm-3">
+            <div class="bg-light text-center">
                 <a href="javascript:void" role="button" data-toggle="modal" data-target="#photoModal"><i class="fa fa-plus fa-lg p-5 bg-light" aria-hidden="true"></i></a>
             </div>
         </div>

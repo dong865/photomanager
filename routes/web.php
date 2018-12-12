@@ -10,10 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/test', 'TestController@test');
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+Route::get('/test/2','TestController@page2')->name('page2');
+
+Route::get('/', 'HomeController@login')->middleware('auth');
 
 Auth::routes();
 
@@ -25,6 +26,3 @@ Route::resource('role','RoleController');
 Route::resource('photo/picture','PictureController');
 
 
-Route::get('/test', function(){
-    return view('photos.test');
-});

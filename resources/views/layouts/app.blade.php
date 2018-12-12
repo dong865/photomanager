@@ -11,7 +11,6 @@
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
     <title>@yield('title') | {{env('APP_NAME', 'Laravel')}}</title>
     <!-- Icons-->
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <link href="{{asset('photostyle/vendors/@coreui/icons/css/coreui-icons.min.css')}}" rel="stylesheet">
     <link href="{{asset('photostyle/vendors/flag-icon-css/css/flag-icon.min.css')}}" rel="stylesheet">
     <link href="{{asset('photostyle/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
