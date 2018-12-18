@@ -32,13 +32,14 @@
         {{--  点击删除弹出模态框  --}}
         @component('common._modal',[
             'modal_id'=>'deleteModal',
-            'title'=>'确认删除？'
+            'title'=>'此操作会删除相册下所有照片，是否继续？'
         ])
             <div class="d-flex justify-content-center p-2">
-                <form class="d-inline" action="{{route('photo.destroy',$item->id)}}" method="post">
+                <form class="d-inline" action="{{route('photo.destroy','delete')}}" method="post">
                     <button type="submit" class="btn btn-danger m-2" >删除</button>
                     @csrf
                     @method('DELETE')
+                    <input type="text" class="photoid" name="photo_id" hidden />
                 </form>
                 <button class="btn btn-primary m-2" type="button" data-dismiss="modal">取消</button>
             </div>
@@ -64,7 +65,7 @@
             <div class="card photo-card">
                 <div class="photo-bar">
                     <a href="{{route('photo.edit',$item->id)}}"><i class="fa fa-cog fa-lg p-2" aria-hidden="true"></i></a>
-                    <button data-toggle="modal" data-target="#deleteModal"  style="border:none"><i class="fa fa-times-circle fa-lg p-2" aria-hidden="true"></i></button>
+                    <button data-toggle="modal" data-target="#deleteModal"  style="border:none" onclick="photo_del({{ $item->id }})"><i class="fa fa-times-circle fa-lg p-2" aria-hidden="true"></i></button>
                 </div>
                 <a href="{{route('photo.show',$item->id)}}"><img class="card-img-top" src="{{asset('storage/uploads/images/photo/cover/'.$item->cover)}}" alt="865832@qq.com"></a>
                 <a href="{{route('photo.show',$item->id)}}">
@@ -86,4 +87,12 @@
             </div>
         </div>
     </div>
+@endsection
+@section('customJs')
+    <script>
+        {{--  删除相册逻辑  --}}
+        function photo_del(photo_id){
+            $('#deleteModal .photoid').val(photo_id);
+        }
+    </script>
 @endsection

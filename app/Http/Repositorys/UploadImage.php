@@ -26,4 +26,19 @@ class UploadImage
 
         return $file_name;
     }
+
+    /*
+        缩略图存储
+        宽度固定，高度等比例缩放
+        $imgFile:图片文件
+        $phth:要存储的路径/文件名
+    */
+    public static function picThumb($imgFile,$path,$width=260){
+        $img=Image::make($imgFile)//初始化Image插件
+            // 宽度300px，高等比例缩放
+            ->resize($width,null,function($constraint){
+                $constraint->aspectRatio();
+            })
+            ->save($path);//保存
+    }
 }

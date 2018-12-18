@@ -18,21 +18,20 @@
 
         {{--  瀑布流  --}}
         <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-        <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
 
-        //无限滚动
+        {{--  无限滚动  --}}
         <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
 
         <script>
             {{--  瀑布流  --}}
             //初始化masonry
-            $('.masonry').imagesLoaded(function() {
-                $('.masonry').masonry({
-                    itemSelector: '.item',
-                    isAnimated: true,
-                    isFitWidth:true
-                });
+            var $grid=$('.masonry').masonry({
+                itemSelector: '.item',
+                percentPosition:true,//响应式
             });
+            $grid.imagesLoaded().progress( function() {
+                $grid.masonry();
+                });
             //点击图片
             function showImg(img){
                 $('.roof').fadeIn('slow');
@@ -54,16 +53,43 @@
                 $(document).unbind("mousewheel");
             })
 
-            $(document).scroll(function(){
-                var win=$(window).height();//可视区域高度
-                var doc=$(this).height();//document高度
-                var scroll_top=$(this).scrollTop();//网页被卷起来的高度
-                console.log(win);
-                if(doc-win==scroll_top){
-                    {{--  alert(6);  --}}
+            {{-- 无限卷动 --}}
+            //初始化
+            // 获取masonry实例
+            var msnry = $grid.data('masonry');
+            $grid.infiniteScroll({
+             path: '.pagination__next',
+             append: '.item',
+             outlayer:msnry,
+             status: '.page-load-status',
+            })
+
+            {{--  点击编辑按钮  --}}
+            let i=true;//点击编辑按钮的bool值，默认true
+            function onEdit(){
+                $('.card-picture input').toggle();
+                $('.edit-group').toggle();
+                if(i){//编辑状态
+                    i=false;
+                    $('.edit').html('<i class="fa fa-edit mr-1"></i>提交');
+                    $grid.infiniteScroll( 'destroy' )//销毁无限卷轴。
+                    $('.picture-card').addClass('edit-card');//阴影效果
+                    $('.picture-img').removeClass('edit-img');//删除图片样式类
+                    $('.picture-img').removeAttr('onclick');//移除图片上的点击事件。
+
+                }else{
+                    i=true;
+                    $('.edit').html('<i class="fa fa-edit mr-1"></i>编辑');
+                    //重新初始化无限卷轴
+                    $grid.infiniteScroll({
+                        path: '.pagination__next',
+                        append: '.item',
+                        outlayer:msnry,
+                        status: '.page-load-status',
+                       })
                 }
 
-            })
+            }
 
 
          {{--  fileinput图片上传插件  --}}
@@ -74,13 +100,13 @@
                 $("#inputimg").fileinput({
                     theme: 'fa',
                     language: 'zh',
-                    uploadUrl: "{{route('picture.store')}}",//show_goods
+                    uploadUrl: "{{route('picture.store')}}",//上传地址
                     allowedFileExtensions: ['jpg', 'png', 'gif','jpeg','webp'],
-                    showUpload: true, //是否显示上传按钮
+                    showUpload: false, //是否显示上传按钮
                     showCaption: true,//是否显示标题
                     uploadAsync: false, //默认异步上传
                     showRemove: true, //显示移除按钮
-                    showPreview: true, //是否显示预览区域
+                    showPreview: false, //是否显示预览区域
                     showBrowse:true, //是否显示浏览按钮
                     browseClass: "btn btn-primary", //按钮样式
                     removeFromPreviewOnError:true, //当选择的文件不符合规则时，例如不是指定后缀文件、大小超出配置等，选择的文件不会出现在预览框中，只会显示错误信息
@@ -159,6 +185,8 @@
                     })
                 });
             });
+
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

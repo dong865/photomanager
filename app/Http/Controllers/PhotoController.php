@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\PhotoAddRequest;
 use App\Http\Repositorys\PhotoDepot;
+use App\Http\Repositorys\DeleteDir;
 use App\Models\Photo;
 use App\Models\Picture;
 
@@ -57,6 +58,7 @@ class PhotoController extends Controller
     {
         //获取id为$id的相册下所有的图片
         $picture=Photo::find($id)->picture()->paginate(25);
+        // dd($picture->toArray()['next_page_url']);
         return view('photos.show',compact('picture','id'));
     }
 
@@ -89,9 +91,28 @@ class PhotoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        Photo::destroy($id);
+        $photo_id=$request->photo_id;
+        $picture=Photo::find($photo_id)->picture;
+        $name=Photo::find($photo_id)->cover;
+        // 删除封面图片
+        $path_cover=storage_path('app/public/uploads/images/photo/cover').'/'.$name;
+        @unlink($path_cover);
+        // 删除相册内所有图片
+        $path_picture_original=storage_path('app/public/uploads/images/picture/original/'.$photo_id);
+        $path_picture_thumbnail=storage_path('app/public/uploads/images/picture/thumbnail/'.$photo_id);
+        DeleteDir::dirdel($path_picture_thumbnail);
+        DeleteDir::dirdel($path_picture_original);
+        // 删除数据库数据
+        if($picture->count()){
+            foreach ($picture as $key => $value) {
+                $picture_id[]=$value->id;//获取相册所有照片id的数组。
+            }
+            picture::destroy($picture_id);//删除照片数据
+        }
+        Photo::destroy($photo_id);//删除相册数据
+
         session()->flash('success','删除成功');
         return back();
     }

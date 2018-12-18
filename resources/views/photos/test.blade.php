@@ -3,37 +3,46 @@
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
 <h1>Infinite Scroll - Masonry image grid</h1>
 <div class="grid are-images-unloaded">
-  <div class="grid__col-sizer"></div>
-  <div class="grid__gutter-sizer"></div>
-  <div class="grid__item grid__item--height2"></div>
-  <div class="grid__item grid__item--width2">
-    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" alt="orange tree" />
-  </div>
-  <div class="grid__item grid__item--height3"></div>
-  <div class="grid__item grid__item--height1"></div>
-  <div class="grid__item grid__item--height2"></div>
-  <div class="grid__item">
-    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/look-out.jpg" alt="look out" />
+    <div class="grid__col-sizer"></div>
+    <div class="grid__gutter-sizer"></div>
+    <div class="grid__item grid__item--height2"></div>
+    <div class="grid__item grid__item--width2">
+      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" alt="orange tree" />
+    </div>
+    <div class="grid__item grid__item--height3"></div>
+    <div class="grid__item grid__item--height1"></div>
+    <div class="grid__item grid__item--height2"></div>
+    <div class="grid__item">
+      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/look-out.jpg" alt="look out" />
+    </div>
+
+    <div class="grid__item grid__item--height1"></div>
+    <div class="grid__item grid__item--height3"></div>
+    <div class="grid__item grid__item--height1"></div>
+    <div class="grid__item grid__item--height3"></div>
+    <div class="grid__item grid__item--height1"></div>
+    <div class="grid__item grid__item--height1"></div>
+    <div class="grid__item grid__item--width2">
+      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/raspberries.jpg" alt="rasberries" />
+    </div>
+    <div class="grid__item grid__item--height2"></div>
+    <div class="grid__item grid__item--height2"></div>
+    <div class="grid__item grid__item--height3"></div>
+    <div class="grid__item grid__item--height1"></div>
+    <div class="grid__item grid__item--height2"></div>
   </div>
 
-  <div class="grid__item grid__item--height1"></div>
-  <div class="grid__item grid__item--height3"></div>
-  <div class="grid__item grid__item--height1"></div>
-  <div class="grid__item grid__item--height3"></div>
-  <div class="grid__item grid__item--height1"></div>
-  <div class="grid__item grid__item--height1"></div>
-  <div class="grid__item grid__item--width2">
-    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/raspberries.jpg" alt="rasberries" />
+  <div class="page-load-status">
+    <div class="loader-ellips infinite-scroll-request">
+      <span class="loader-ellips__dot"></span>
+      <span class="loader-ellips__dot"></span>
+      <span class="loader-ellips__dot"></span>
+      <span class="loader-ellips__dot"></span>
+    </div>
+    <p class="infinite-scroll-last">End of content</p>
+    <p class="infinite-scroll-error">No more pages to load</p>
   </div>
-  <div class="grid__item grid__item--height2"></div>
-  <div class="grid__item grid__item--height2"></div>
-  <div class="grid__item grid__item--height3"></div>
-  <div class="grid__item grid__item--height1"></div>
-  <div class="grid__item grid__item--height2"></div>
-</div>
-
 <style>
-
     body {
         font-family: sans-serif;
         line-height: 1.4;
@@ -89,6 +98,49 @@
         color: #777;
       }
 
+      /* loader ellips in separate pen CSS */
+      .loader-ellips__dot {
+        display: block;
+        width: 1em;
+        height: 1em;
+        border-radius: 0.5em;
+        background: #555;
+        position: absolute;
+        animation-duration: 0.5s;
+        animation-timing-function: ease;
+        animation-iteration-count: infinite;
+      }
+
+      .loader-ellips__dot:nth-child(1),
+      .loader-ellips__dot:nth-child(2) {
+        left: 0;
+      }
+      .loader-ellips__dot:nth-child(3) { left: 1.5em; }
+      .loader-ellips__dot:nth-child(4) { left: 3em; }
+
+      @keyframes reveal {
+        from { transform: scale(0.001); }
+        to { transform: scale(1); }
+      }
+
+      @keyframes slide {
+        to { transform: translateX(1.5em) }
+      }
+
+      .loader-ellips__dot:nth-child(1) {
+        animation-name: reveal;
+      }
+
+      .loader-ellips__dot:nth-child(2),
+      .loader-ellips__dot:nth-child(3) {
+        animation-name: slide;
+      }
+
+      .loader-ellips__dot:nth-child(4) {
+        animation-name: reveal;
+        animation-direction: reverse;
+      }
+
 </style>
 
 
@@ -115,13 +167,16 @@
         $grid.masonry( 'appended', $items );
       });
 
+
       //-------------------------------------//
-      // hack CodePen to load pens as pages
+      // init Infinte Scroll
+
+
 
       var nextPenSlugs = [
-        "{{ route('page2') }}",
-        "{{ route('page2') }}",
-        "{{ route('page2') }}",
+        "{{ route('test2') }}",
+        "{{ route('test2') }}",
+        "{{ route('test2') }}",
       ];
 
       function getPenPath() {
@@ -130,15 +185,12 @@
           return  slug;
         }
       }
-
-      //-------------------------------------//
-      // init Infinte Scroll
-
       $grid.infiniteScroll({
         path: getPenPath,
         append: '.grid__item',
         outlayer: msnry,
         status: '.page-load-status',
       });
+
 
 </script>

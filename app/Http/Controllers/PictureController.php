@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Photo;
 use App\Models\Picture;
+use App\Http\Repositorys\PictureDepot;
+use Illuminate\Support\Facades\Storage;
 
 class PictureController extends Controller
 {
@@ -34,25 +36,24 @@ class PictureController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request , PictureDepot $picture)
     {
         $admin_id=auth('admin')->user()->id;//获取当前用户id
         $photo_id=$request->photo_id;//所在项目id
         $file=$request->inputimg;
         foreach ($file as $key => $value) {
-            // 存储图片
-            $extend=$value->getClientOriginalExtension();//获取扩展名.
             $name=$value->hashName();//带扩展名的随机数
-            $path=$value->storeAs('public/uploads/images/picture/'.$photo_id,$name);
+            // 存储图片缩略图
+            $picture->imgResize($value,$photo_id,$name);
+            // 存储图片原图
+            $picture->imgCreate($value,$photo_id,$name);
             // 存储数据库.
             Picture::create([
                 'admin_id' => $admin_id,
                 'image' => $name,
                 'photo_id' => $photo_id,
-
             ]);
         }
-
         return back();
     }
 
@@ -99,5 +100,22 @@ class PictureController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete(Request $request){
+        $data=$request->toArray();
+        $result=Picture::find($data);
+        foreach ($result as $value) {
+            //获取文件路径
+            $path_thumbnail=storage_path('app/public/uploads/images/picture/thumbnail/'.$value->photo_id).'/'.$value->image;
+            $path_original=storage_path('app/public/uploads/images/picture/original/'.$value->photo_id).'/'.$value->image;
+            // 删除存储文件
+            @unlink($path_thumbnail);
+            @unlink($path_original);
+            // 删除数据库数据
+            Picture::destroy($value->id);
+        }
+
+        return back();
     }
 }

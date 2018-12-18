@@ -11,6 +11,7 @@
     <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
     <title>@yield('title') | {{env('APP_NAME', 'Laravel')}}</title>
     <!-- Icons-->
+    {{--  <link rel="icon" type="image/png" href="{{ asset('icon/icon.png') }}">  --}}
     <link href="{{asset('photostyle/vendors/@coreui/icons/css/coreui-icons.min.css')}}" rel="stylesheet">
     <link href="{{asset('photostyle/vendors/flag-icon-css/css/flag-icon.min.css')}}" rel="stylesheet">
     <link href="{{asset('photostyle/vendors/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet">
@@ -89,34 +90,31 @@
       </div>
       <main class="main">
         <!-- Breadcrumb-->
-          <ol class="breadcrumb">
-          <li class="breadcrumb-item">Home</li>
-          <li class="breadcrumb-item">
-            <a href="#">Admin</a>
-          </li>
-          <li class="breadcrumb-item active">Dashboard</li>
-          <!-- Breadcrumb Menu-->
-          <li class="breadcrumb-menu d-md-down-none">
-            <div class="btn-group" role="group" aria-label="Button group">
-              <a class="btn" href="#">
-                <i class="icon-speech"></i>
-              </a>
-              <a class="btn" href="./">
-                <i class="icon-graph"></i>  Dashboard</a>
-              <a class="btn" href="#">
-                <i class="icon-settings"></i>  Settings</a>
-            </div>
-          </li>
-        </ol>
-          <div class="container-fluid mb-4">
+        {{--  <ol class="breadcrumb">
+            <li class="breadcrumb-item">Home</li>
+            <li class="breadcrumb-item">
+                <a href="#">Admin</a>
+            </li>
+            <li class="breadcrumb-item active">Dashboard</li>
+            <!-- Breadcrumb Menu-->
+            <li class="breadcrumb-menu d-md-down-none">
+                <div class="btn-group" role="group" aria-label="Button group">
+                <a class="btn" href="#">
+                    <i class="icon-speech"></i>
+                </a>
+                <a class="btn" href="./">
+                    <i class="icon-graph"></i>  Dashboard</a>
+                <a class="btn" href="#">
+                    <i class="icon-settings"></i>  Settings</a>
+                </div>
+            </li>
+        </ol>  --}}
+          <div class="container-fluid mt-4">
           <div class="animated fadeIn"></div>
         </div>
         @include('common.message')
-        <div class="mt-3 position-relative">
+        <div class="position-relative">
             @yield('content')
-            @if (app()->isLocal())
-              @include('sudosu::user-selector')
-            @endif
         </div>
 
 
